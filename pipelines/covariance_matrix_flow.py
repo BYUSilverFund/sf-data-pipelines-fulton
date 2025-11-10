@@ -116,7 +116,7 @@ def clean_root_ids(df: pl.DataFrame, date_: dt.date) -> pl.DataFrame:
         )
         .filter(
             pl.col("barrid").ne("[End of File]"),
-            pl.col("instrument").is_in(["STOCK", "ETF", "ADR"]),
+            pl.col("instrument").is_in(["STOCK", "ETF", "ADR", "CROSS_LIST"]),
             pl.col("start_date").le(date_),
             pl.col("end_date").ge(date_),
             pl.col("iso_country_code").eq("USA"),

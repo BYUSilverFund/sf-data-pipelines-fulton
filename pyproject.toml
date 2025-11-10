@@ -13,3 +13,8 @@ dependencies = [
     "pyarrow>=22.0.0",
     "python-dotenv>=1.2.1",
 ]
+
+[dependency-groups]
+dev = [
+    "rich>=14.2.0",
+]
