@@ -1,4 +1,12 @@
-factors = sorted(
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
+ROOT = os.getenv("ROOT")
+
+FACTORS = sorted(
     [
         "USSLOWL_BETA",
         "USSLOWL_COUNTRY",

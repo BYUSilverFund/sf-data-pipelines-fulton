@@ -1,8 +1,9 @@
+import os
+from io import BytesIO, StringIO
+
 import boto3
 import polars as pl
-from io import StringIO, BytesIO
 from dotenv import load_dotenv
-import os
 
 load_dotenv(override=True)
 

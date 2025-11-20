@@ -1,6 +1,8 @@
-import polars as pl
-import exchange_calendars as xcals
 from datetime import date
+
+import exchange_calendars as xcals
+import polars as pl
+
 
 def get_last_market_date(
     current_date: date | None = None, n_days: int = 1

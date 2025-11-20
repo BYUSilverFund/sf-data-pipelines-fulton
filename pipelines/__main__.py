@@ -1,13 +1,15 @@
-import click
 import datetime as dt
-from pipelines.all_pipelines import (
-    covariance_matrix_pipeline,
-)
+
+import click
+
+from pipelines.all_pipelines import covariance_matrix_pipeline
+
 
 @click.group()
 def cli():
     """Main CLI entrypoint."""
     pass
+
 
 @cli.command()
 def covariance_matrix():
