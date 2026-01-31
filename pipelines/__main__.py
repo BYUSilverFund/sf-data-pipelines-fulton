@@ -2,7 +2,10 @@ import datetime as dt
 
 import click
 
-from pipelines.all_pipelines import covariance_matrix_pipeline
+from pipelines.all_pipelines import (
+    covariance_matrix_pipeline,
+    return_factors_pipeline,
+)
 
 
 @click.group()
@@ -17,6 +20,11 @@ def covariance_matrix():
     covariance_matrix_pipeline()
     click.echo("Flow completed successfully!")
 
+@cli.command()
+def return_factors():
+    click.echo(f"Running return_factors_pipeline: {dt.date.today()}.")
+    return_factors_pipeline()
+    click.echo("Flow completed successfully!")
 
 if __name__ == "__main__":
     cli()
