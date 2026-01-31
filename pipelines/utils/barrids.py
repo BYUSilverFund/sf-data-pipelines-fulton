@@ -4,7 +4,7 @@ import zipfile
 
 import polars as pl
 
-from pipelines.variables import FACTORS, ROOT
+from pipelines.utils.variables import FACTORS, ROOT
 
 root_ids_column_mapping = {
     "!Barrid": "barrid",

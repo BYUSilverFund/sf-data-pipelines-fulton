@@ -1,19 +1,18 @@
 import io
 import zipfile
-import datetime as dt
 
 import polars as pl
 
 from pipelines.utils import s3
 from pipelines.utils import get_last_market_date
-from pipelines.variables import ROOT
+from pipelines.utils.variables import ROOT
 
 
 def _clean_return_factors(df: pl.DataFrame) -> pl.DataFrame:
     return (
         df.rename({'!Factor': 'factor', 'DlyReturn': 'dly_return', 'DataDate': 'date'})
         .with_columns(
-            pl.col('dly_return').str.strip_chars().cast(pl.Float64),
+            pl.col('dly_return').cast(pl.Utf8).str.strip_chars().cast(pl.Float64),
             pl.col('date').cast(pl.Utf8).str.strptime(pl.Date, '%Y%m%d'),
         )
         .select(pl.col('date'), pl.col('factor'), pl.col('dly_return'))
