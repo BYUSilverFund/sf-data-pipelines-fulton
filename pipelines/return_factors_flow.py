@@ -13,7 +13,7 @@ def _clean_return_factors(df: pl.DataFrame) -> pl.DataFrame:
     return (
         df.rename({'!Factor': 'factor', 'DlyReturn': 'dly_return', 'DataDate': 'date'})
         .with_columns(
-            pl.col('dly_return').str.strip_chars().cast(pl.Float64),
+            pl.col('dly_return').cast(pl.Utf8).str.strip_chars().cast(pl.Float64),
             pl.col('date').cast(pl.Utf8).str.strptime(pl.Date, '%Y%m%d'),
         )
         .select(pl.col('date'), pl.col('factor'), pl.col('dly_return'))

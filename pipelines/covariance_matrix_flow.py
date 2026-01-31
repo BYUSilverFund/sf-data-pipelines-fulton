@@ -1,13 +1,13 @@
 import polars as pl
 
 from pipelines.utils import s3
-from pipelines.barrids import get_barrids
 from pipelines.covariance_matrix import construct_covariance_matrix
 from pipelines.covariances import get_factor_covariances
 from pipelines.exposures import get_etf_exposures, get_stock_exposures
 from pipelines.specific_risk import get_etf_specific_risk, get_stock_specific_risk
-from pipelines.tickers import get_tickers
+from pipelines.utils.tickers import get_tickers
 from pipelines.utils import get_last_market_date
+from pipelines.utils.barrids import get_barrids
 
 
 def covariance_matrix_daily_flow() -> None:
