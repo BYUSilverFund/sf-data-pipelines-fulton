@@ -35,3 +35,13 @@ def get_last_market_date(
     )
 
     return df
+
+
+def get_market_dates_in_range(start_date: date, end_date: date) -> list[date]:
+    return (
+        pl.from_pandas(xcals.get_calendar("XNYS").schedule)
+        .with_columns(pl.col("close").cast(pl.Date).alias("date"))
+        .filter(pl.col("date").is_between(start_date, end_date))
+        ["date"]
+        .to_list()
+    )
