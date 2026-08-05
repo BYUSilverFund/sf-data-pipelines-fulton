@@ -7,12 +7,12 @@ import boto3
 from pipelines.utils.barra_datasets import barra_returns
 from pipelines.utils import s3
 
-def historical_data_flow() -> None:
+def historical_data_flow(date_:date) -> None:
 
     def read_file_into_df(zip_path: Path, filename: str) -> pl.DataFrame:
 
         '''
-        daily = True means we read the daily file be default, set to False to read the history file
+        Function to read the zipfile
         '''
         import io
         import zipfile
@@ -29,20 +29,27 @@ def historical_data_flow() -> None:
     def format_s3_file_name(date_: date) -> str: 
         return date_.strftime('%Y/%m/%d.parquet')
 
-    # 1. get current date, unzip yesterdays file, clean data
-    yesterday = date.today() - timedelta(days=1)
-    print(f"pulling historical data for {yesterday}")
-    zip_path = barra_returns.daily_zip_folder_path(yesterday)
-    file_name = barra_returns.file_name(yesterday)
-    df = read_file_into_df(zip_path, file_name)
-    df = df.drop("Capt", "PriceSource")
+    print(date_)
+    while date_ < date.today():
+        # 1. get current date, unzip yesterdays file, clean data
+        print(f"pulling historical data for {date_}")
+        zip_path = barra_returns.daily_zip_folder_path(date_)
+        file_name = barra_returns.file_name(date_)
+        try:
+            df = read_file_into_df(zip_path, file_name)
+        except:
+            print(f"no file for {date_}")
+            date_ += timedelta(days=1)
+            continue
+        df = df.drop("Capt", "PriceSource")
+        date_ += timedelta(days=1)
 
-    # # 2. Write cleaned file to S3
-    s3.write_parquet(
-        bucket_name="barra-stock-history",
-        file_name=format_s3_file_name(yesterday),
-        file_data=df,
-    )
+        # # 2. Write cleaned file to S3
+        s3.write_parquet(
+            bucket_name="barra-stock-history",
+            file_name=format_s3_file_name(date_),
+            file_data=df,
+        )
 
     # # 3. Log completion
     print("Historical data flow complete")

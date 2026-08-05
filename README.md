@@ -55,3 +55,8 @@ python -m pipelines covariance-matrix
 
 
 Note: We run all our jobs on login node cron jobs, this is not an issue because they are small and don’t need any powerful compute. But just FYI this might need to change in the future.
+
+## Stock History Pipeline
+
+It will run once daily and pull the historical data from yesterday.
+It can also be manually ran with the --since parameter to backfill data. From my understanding sometime barra corrects previous data and this might be useful if we find any data discrepancies in the future.

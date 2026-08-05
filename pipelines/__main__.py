@@ -29,9 +29,17 @@ def return_factors():
 
 
 @cli.command()
-def historical_data():
+@click.option(
+    '--since',
+    type=click.DateTime(formats=['%Y-%m-%d']),
+    default=str(dt.date.today() - dt.timedelta(days=1)),
+    help='Start date in YYYY-MM-DD format. Defaults to yesterday.'
+)
+def historical_data(since):
     click.echo(f"Running historical_data_pipeline: {dt.date.today()}.")
-    historical_data_pipeline()
+
+    start_date = since.date() if isinstance(since, dt.datetime) else since
+    historical_data_pipeline(start_date)
     
 
 if __name__ == "__main__":
