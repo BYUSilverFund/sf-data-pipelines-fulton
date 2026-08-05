@@ -5,7 +5,7 @@ import polars as pl
 
 from pipelines.utils import s3
 from pipelines.utils import get_last_market_date
-from pipelines.utils.variables import ROOT
+from pipelines.utils.variables import DATA_ROOT
 
 
 def _clean_return_factors(df: pl.DataFrame) -> pl.DataFrame:
@@ -27,8 +27,8 @@ def return_factors_daily_flow() -> None:
 
     # try bime first, then us
     zip_paths = [
-        f"{ROOT}/bime/SMD_USSLOWL_100_{date_str_1}.zip",
-        f"{ROOT}/us/SMD_USSLOWL_100_{date_str_1}.zip",
+        f"{DATA_ROOT}/bime/SMD_USSLOWL_100_{date_str_1}.zip",
+        f"{DATA_ROOT}/us/SMD_USSLOWL_100_{date_str_1}.zip",
     ]
 
     file_name = f'USSLOWL_100_DlyFacRet.{date_str_2}'

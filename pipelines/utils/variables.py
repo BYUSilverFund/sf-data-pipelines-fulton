@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-ROOT = os.getenv("ROOT")
+DATA_ROOT = os.getenv("DATA_ROOT")
 
 FACTORS = sorted(
     [

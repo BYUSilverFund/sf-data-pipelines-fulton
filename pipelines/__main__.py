@@ -5,6 +5,7 @@ import click
 from pipelines.all_pipelines import (
     covariance_matrix_pipeline,
     return_factors_pipeline,
+    historical_data_pipeline,
 )
 
 
@@ -25,6 +26,13 @@ def return_factors():
     click.echo(f"Running return_factors_pipeline: {dt.date.today()}.")
     return_factors_pipeline()
     click.echo("Flow completed successfully!")
+
+
+@cli.command()
+def historical_data():
+    click.echo(f"Running historical_data_pipeline: {dt.date.today()}.")
+    historical_data_pipeline()
+    
 
 if __name__ == "__main__":
     cli()

@@ -20,7 +20,7 @@ TEMP_CRON=$(mktemp)
 cat > "$TEMP_CRON" << EOF
 0 2 * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines return-factors > logs/return_factors.log 2>&1
 0 2 * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines covariance-matrix > logs/covariance_matrix.log 2>&1
-1 * * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines test-print > logs/test_print.log 2>&1
+0 2 * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines historical-data > logs/historical_data.log 2>&1
 EOF
 
 crontab "$TEMP_CRON"

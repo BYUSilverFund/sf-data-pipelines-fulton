@@ -4,7 +4,7 @@ import zipfile
 
 import polars as pl
 
-from pipelines.utils.variables import FACTORS, ROOT
+from pipelines.utils.variables import FACTORS, DATA_ROOT
 
 specific_risk_column_mapping = {
     "!Barrid": "barrid",
@@ -33,7 +33,7 @@ def get_stock_specific_risk(date_: dt.date, barrids: list[str]) -> pl.DataFrame:
     date_str_1 = date_.strftime("%y%m%d")
     date_str_2 = date_.strftime("%Y%m%d")
 
-    zip_folder_path = f"{ROOT}/bime/SMD_USSLOWL_100_{date_str_1}.zip"
+    zip_folder_path = f"{DATA_ROOT}/bime/SMD_USSLOWL_100_{date_str_1}.zip"
     file_name = f"USSLOWL_100_Asset_Data.{date_str_2}"
 
     with zipfile.ZipFile(zip_folder_path, "r") as zip_folder:
@@ -50,7 +50,7 @@ def get_etf_specific_risk(date_: dt.date, barrids: list[str]) -> pl.DataFrame:
     date_str_1 = date_.strftime("%y%m%d")
     date_str_2 = date_.strftime("%Y%m%d")
 
-    zip_folder_path = f"{ROOT}/bime/SMD_USSLOWL_100_ETF_{date_str_1}.zip"
+    zip_folder_path = f"{DATA_ROOT}/bime/SMD_USSLOWL_100_ETF_{date_str_1}.zip"
     file_name = f"USSLOWL_ETF_100_Asset_Data.{date_str_2}"
 
     with zipfile.ZipFile(zip_folder_path, "r") as zip_folder:
