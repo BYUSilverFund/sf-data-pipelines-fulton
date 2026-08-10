@@ -1,8 +1,6 @@
 from pathlib import Path
 import polars as pl
-import os
 from datetime import date, timedelta
-import boto3
 
 from pipelines.utils.barra_datasets import barra_returns
 from pipelines.utils import s3

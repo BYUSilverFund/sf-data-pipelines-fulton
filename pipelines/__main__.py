@@ -40,6 +40,7 @@ def historical_data(since):
 
     start_date = since.date() if isinstance(since, dt.datetime) else since
     historical_data_pipeline(start_date)
+    click.echo("Flow completed successfully!")
     
 
 if __name__ == "__main__":
