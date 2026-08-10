@@ -17,11 +17,11 @@ My setup for connecting to my login node on the Fulton:
 
 1. I use the VS code Remote Explorer extension.
 2. Hit connect in new window …
-![alt text](image.png)
+![alt text](readme_images/image.png)
 3. Enter your password
-![alt text](image-1.png)
+![alt text](readme_images/image-1.png)
 4. Then enter your MFA code from your authentication app
-![alt text](image-2.png)
+![alt text](readme_images/image-2.png)
 
 Once you have logged in you should be at a filepath like `/home/{username}/`
 
@@ -32,7 +32,7 @@ mkdir projects
 cd projects
 git clone [https://github.com/BYUSilverFund/sf-data-pipelines-fulton.git](https://github.com/BYUSilverFund/sf-data-pipelines-fulton.git)
 ```
-![alt text](image-3.png)
+![alt text](readme_images/image-3.png)
 
 Once you have the repo on your login node create an  .env file and set the env vars.
 
@@ -43,7 +43,7 @@ Note: Only one student needs to have the jobs running on their crontab. I have a
 chmod +x crontab.sh
 ./crontab.sh
 ```
-![alt text](image-4.png)
+![alt text](readme_images/image-4.png)
 
 To run a pipeline you will need all of your env vars set. Activate your venv and run specific pipelines manually (this command runs the covariance matrix pipeline). All pipelines are defined in __main__.py
 
@@ -51,7 +51,7 @@ To run a pipeline you will need all of your env vars set. Activate your venv and
 source .venv/bin/activate
 python -m pipelines covariance-matrix
 ```
-![alt text](image-5.png)
+![alt text](readme_images/image-5.png)
 
 
 Note: We run all our jobs on login node cron jobs, this is not an issue because they are small and don’t need any powerful compute. But just FYI this might need to change in the future.
