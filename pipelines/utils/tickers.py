@@ -4,6 +4,7 @@ import zipfile
 
 import polars as pl
 
+from pipelines.utils.barrids import get_barrids
 from pipelines.utils.variables import FACTORS, DATA_ROOT
 
 tickers_column_mapping = {
@@ -41,3 +42,16 @@ def get_tickers(date_: dt.date):
         )
 
         return _clean_tickers(df)
+
+def barrid_ticker_join(date_: dt.date)-> pl.DataFrame:
+    tickers_df = get_tickers(date_)
+
+    barrids_df = (
+        get_barrids(date_)
+        .join(tickers_df, on="barrid", how="left")
+        .filter(pl.col("ticker").is_not_null())
+        .select("barrid", "ticker")
+        .sort("barrid")
+    )
+
+    return barrids_df

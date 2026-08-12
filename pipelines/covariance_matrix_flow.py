@@ -5,27 +5,17 @@ from pipelines.covariance_matrix import construct_covariance_matrix
 from pipelines.covariances import get_factor_covariances
 from pipelines.exposures import get_etf_exposures, get_stock_exposures
 from pipelines.specific_risk import get_etf_specific_risk, get_stock_specific_risk
-from pipelines.utils.tickers import get_tickers
+from pipelines.utils.tickers import barrid_ticker_join
 from pipelines.utils import get_last_market_date
-from pipelines.utils.barrids import get_barrids
 
 
 def covariance_matrix_daily_flow() -> None:
     date_ = get_last_market_date()[0]
 
     # 1. Get barrids and tickers
-    tickers_df = get_tickers(date_)
-
-    barrids_df = (
-        get_barrids(date_)
-        .join(tickers_df, on="barrid", how="left")
-        .filter(pl.col("ticker").is_not_null())
-        .select("barrid", "ticker")
-        .sort("barrid")
-    )
-
-    barrids = barrids_df["barrid"].to_list()
-    tickers = barrids_df["ticker"].to_list()
+    barrid_ticker_df = barrid_ticker_df(date_)
+    barrids = barrid_ticker_df["barrid"].to_list()
+    tickers = barrid_ticker_df["ticker"].to_list()
     ticker_mapping = {barrid: ticker for barrid, ticker in zip(barrids, tickers)}
 
     # 2. Get exposures

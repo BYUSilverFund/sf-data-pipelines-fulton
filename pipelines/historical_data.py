@@ -4,6 +4,15 @@ from datetime import date, timedelta
 
 from pipelines.utils.barra_datasets import barra_returns
 from pipelines.utils import s3
+from pipelines.utils.tickers import barrid_ticker_join
+
+rename_column_mapping = {
+    "!Barrid": "barrid",
+    "Price": "price",
+    "Currency": "currency",
+    "DlyReturn%": 'daily_return',
+    "DataDate": "date"
+}
 
 def historical_data_flow(date_:date) -> None:
 
@@ -39,15 +48,28 @@ def historical_data_flow(date_:date) -> None:
             print(f"no file for {date_}")
             date_ += timedelta(days=1)
             continue
-        df = df.drop("Capt", "PriceSource")
-        date_ += timedelta(days=1)
 
-        # # 2. Write cleaned file to S3
+        df = df.drop("Capt", "PriceSource")
+        df = df.rename(rename_column_mapping)
+
+        # 2. Get tickers and join to history file on barrid
+        barrids_ticker_df = barrid_ticker_join(date_)
+
+        history_with_tickers = (
+            df
+            .join(barrids_ticker_df, on="barrid", how="left")
+            .filter(pl.col("ticker").is_not_null())
+            .sort("barrid")
+        )
+
+        # # . Write cleaned file to S3
         s3.write_parquet(
             bucket_name="barra-stock-history",
             file_name=format_s3_file_name(date_),
-            file_data=df,
+            file_data=history_with_tickers,
         )
+
+        date_ += timedelta(days=1)
 
     # # 3. Log completion
     print("Historical data flow complete")

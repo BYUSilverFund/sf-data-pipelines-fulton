@@ -1,0 +1,53 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug: Covariance Matrix Pipeline",
+            "type": "python",
+            "request": "launch",
+            "module": "pipelines",
+            "args": ["covariance-matrix"],
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Debug: Return Factors Pipeline",
+            "type": "python",
+            "request": "launch",
+            "module": "pipelines",
+            "args": ["return-factors"],
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Debug: Historical Data Pipeline",
+            "type": "python",
+            "request": "launch",
+            "module": "pipelines",
+            "args": ["historical-data"],
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Debug: Historical Data Pipeline (Custom Date)",
+            "type": "python",
+            "request": "launch",
+            "module": "pipelines",
+            "args": ["historical-data", "--since", "${input:historicalDataDate}"],
+            "justMyCode": true,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "historicalDataDate",
+            "type": "promptString",
+            "description": "Enter start date (YYYY-MM-DD format)",
+            "default": "2026-01-01"
+        }
+    ]
+}
