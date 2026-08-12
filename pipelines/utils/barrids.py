@@ -4,7 +4,7 @@ import zipfile
 
 import polars as pl
 
-from pipelines.utils.variables import FACTORS, DATA_ROOT
+from pipelines.utils.barra_datasets import barra_assets
 
 root_ids_column_mapping = {
     "!Barrid": "barrid",
@@ -39,11 +39,11 @@ def _clean_root_ids(df: pl.DataFrame, date_: dt.date) -> pl.DataFrame:
 
 
 def get_barrids(date_: dt.date):
-    date_str_1 = date_.strftime("%y%m%d")
-    date_str_2 = date_.strftime("%Y%m%d")
+    
+    # use barra_datasets to get file paths
+    zip_folder_path = barra_assets.daily_zip_folder_path(date_)
+    file_name = barra_assets.file_name(date_)
 
-    zip_folder_path = f"{DATA_ROOT}/bime/SMD_USSLOW_XSEDOL_ID_{date_str_1}.zip"
-    file_name = f"USA_Asset_Identity.{date_str_2}"
 
     with zipfile.ZipFile(zip_folder_path, "r") as zip_folder:
         df = pl.read_csv(

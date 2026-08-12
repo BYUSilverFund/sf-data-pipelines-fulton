@@ -5,6 +5,7 @@ import zipfile
 import polars as pl
 
 from pipelines.utils.variables import FACTORS, DATA_ROOT
+from pipelines.utils.barra_datasets import barra_covariances
 
 covariances_column_mapping = {
     "!Factor1": "factor_1",
@@ -29,11 +30,9 @@ def _clean_covariances(df: pl.DataFrame) -> pl.DataFrame:
 
 
 def get_factor_covariances(date_: dt.date):
-    date_str_1 = date_.strftime("%y%m%d")
-    date_str_2 = date_.strftime("%Y%m%d")
 
-    zip_folder_path = f"{DATA_ROOT}/bime/SMD_USSLOWL_100_{date_str_1}.zip"
-    file_name = f"USSLOWL_100_Covariance.{date_str_2}"
+    zip_folder_path = barra_covariances.daily_zip_folder_path(date_)
+    file_name = barra_covariances.file_name(date_)
 
     with zipfile.ZipFile(zip_folder_path, "r") as zip_folder:
         df = pl.read_csv(

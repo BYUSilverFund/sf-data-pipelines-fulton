@@ -13,7 +13,7 @@ def covariance_matrix_daily_flow() -> None:
     date_ = get_last_market_date()[0]
 
     # 1. Get barrids and tickers
-    barrid_ticker_df = barrid_ticker_df(date_)
+    barrid_ticker_df = barrid_ticker_join(date_)
     barrids = barrid_ticker_df["barrid"].to_list()
     tickers = barrid_ticker_df["ticker"].to_list()
     ticker_mapping = {barrid: ticker for barrid, ticker in zip(barrids, tickers)}
