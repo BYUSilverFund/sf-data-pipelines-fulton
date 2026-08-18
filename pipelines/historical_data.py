@@ -24,14 +24,21 @@ def historical_data_flow(date_:date) -> None:
         import io
         import zipfile
 
-
         with zipfile.ZipFile(zip_path, "r") as z:
-            df = pl.read_csv(
-                io.BytesIO(z.read(filename)),
+            # 3. Read the raw bytes and inspect first few lines
+            raw_bytes = z.read(filename)
+            if len(raw_bytes) == 0:
+                raise ValueError(f"File '{filename}' inside the zip is empty (0 bytes).")
+
+            # 4. Parse with Polars with tolerant settings for Barra data
+            return pl.read_csv(
+                io.BytesIO(raw_bytes),
                 skip_rows=1,
                 separator="|",
+                infer_schema_length=10000,
+                truncate_ragged_lines=True,
+                ignore_errors=True,
             )
-        return df
 
     def format_s3_file_name(date_: date) -> str: 
         return date_.strftime('%Y/%m/%d.parquet')

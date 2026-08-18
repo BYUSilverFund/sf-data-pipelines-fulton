@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 from datetime import date
 import os
 from pathlib import Path
-import polars as pl
 
 
 class BarraDataset:
@@ -25,15 +24,13 @@ class BarraDataset:
         self._file_name = file_name
 
     def history_zip_folder(self) -> Path:
-        return Path(self._base_path, self._history_folder)
+        return Path(self._base_path) / self._history_folder
 
     def history_zip_file(self, year: int) -> str:
         return f"{self._history_zip_file}_{year}"
 
     def history_zip_folder_path(self, year: int) -> Path:
-        return (
-            Path(self._base_path, self._history_folder, f"{self._history_zip_file}_{year}.zip")
-        )
+        return Path(self._base_path) / self._history_folder / f"{self._history_zip_file}_{year}.zip"
 
     def file_name(self, date_: date | None = None) -> str:
         if date_:
@@ -42,9 +39,8 @@ class BarraDataset:
             return self._file_name
 
     def daily_zip_folder_path(self, date_: date) -> Path:
-        return (
-            Path(self._base_path, self._daily_folder, f"{self._daily_zip_file}_{date_.strftime('%y%m%d')}.zip")
-        )
+        zip_filename = f"{self._daily_zip_file}_{date_.strftime('%y%m%d')}.zip"
+        return Path(self._base_path) / self._daily_folder / zip_filename
     
 
 # these files contain historical data for all assets tracked by barra

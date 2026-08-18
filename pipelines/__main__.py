@@ -36,7 +36,7 @@ def return_factors():
     help='Start date in YYYY-MM-DD format. Defaults to yesterday.'
 )
 def historical_data(since):
-    click.echo(f"Running historical_data_pipeline: {dt.date.today()}.")
+    click.echo(f"Running historical_data_pipeline: {dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.")
 
     start_date = since.date() if isinstance(since, dt.datetime) else since
     historical_data_pipeline(start_date)
