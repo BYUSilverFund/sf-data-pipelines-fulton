@@ -7,7 +7,12 @@ Silver Fund has cron jobs running on the Fulton Supercomputer. We use this to pu
 
 We currently do not have a shared Silver Fund account; instead, individual student accounts run the cron jobs.
 
-In order to get an account on the Fulton, visit [https://rc.byu.edu/](https://rc.byu.edu/) and request an account. Request Brian as your supervisor (requires approval from him and Research Computing). You will also need to configure MFA (with an authenticator app) to allow SSH.
+## Create an Acount
+Visit [https://rc.byu.edu/account/create/](https://rc.byu.edu/account/create/) and request an account. Request Brian as your supervisor (requires approval from him and Research Computing). This usually takes a few days to get approved.
+
+[This](https://rc.byu.edu/wiki/index.php?id=Getting+Started) page  provides resources for first time users
+
+After your account is approved you will need to configure MFA (with an authenticator app) to allow SSH.
 
 ## How to Remote into the Fulton
 
