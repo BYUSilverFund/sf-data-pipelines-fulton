@@ -30,9 +30,9 @@ TEMP_CRON=$(mktemp)
 # Write back existing jobs plus the updated pipeline jobs with fully expanded paths
 cat > "$TEMP_CRON" << EOF
 $EXISTING_CRON
-0 2 * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines return-factors > logs/return_factors.log 2>&1
-1 2 * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines covariance-matrix > logs/covariance_matrix.log 2>&1
-2 2 * * * cd $PROJECT_PATH && .venv/bin/python -m pipelines historical-data > logs/historical_data.log 2>&1
+0 2 * * * cd $PROJECT_PATH && $PROJECT_PATH/run_pipeline_with_alerts.sh return-factors $PROJECT_PATH/logs/return_factors.log
+1 2 * * * cd $PROJECT_PATH && $PROJECT_PATH/run_pipeline_with_alerts.sh covariance-matrix $PROJECT_PATH/logs/covariance_matrix.log
+2 2 * * * cd $PROJECT_PATH && $PROJECT_PATH/run_pipeline_with_alerts.sh historical-data $PROJECT_PATH/logs/historical_data.log
 EOF
 
 # Remove empty lines if any were introduced
